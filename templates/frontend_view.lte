@@ -1,0 +1,14 @@
+{% autoescape false %}
+
+<div class="mod_last_forum_hits_f">
+	
+	<a href="{{ WB_URL }}/modules/forum/thread_view.php?goto={{ f_postid }}" class="mod_last_forum_entries_hits_link_f">
+		<span class="mod_last_forum_entries_hits_forum_f">{{ f_forum }}</span>
+		<span class="mod_last_forum_entires_hits_devider_f">{{ owd_devider }}</span>
+		<span class="mod_last_forum_entries_hits_title_f">{{ f_title }}</span>
+	</a>
+	<div class="mod_last_forum_entires_date">{{ f_date }}</div>
+</div>
+<p class="mod_last_forum_entries_hits_text_f">{{ owd_mksubstr }}</p>
+
+{% endautoescape %}

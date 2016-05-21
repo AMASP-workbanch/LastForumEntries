@@ -25,6 +25,10 @@ LastForumEntries (
 
 #### Brief changelog
 
+##### 0.4.0
+- Update header
+- Requirements to Forum 0.5.9 (need "subway"-class and "parser" for templates)
+
 ##### 0.3.1
 - Bugfixes for WB 2.8.3 SP6 and WB(CE)
 

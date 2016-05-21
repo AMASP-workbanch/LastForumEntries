@@ -1,26 +1,15 @@
 <?php
-/*
- Website Baker Project <http://www.websitebaker.org/>
- Copyright (C) 2004-2007, Ryan Djurovich
 
- Website Baker is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- Website Baker is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Website Baker; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
- -----------------------------------------------------------------------------------------
-  Licencsed under GNU, written by herr rilke
- -----------------------------------------------------------------------------------------
-*/
+/**
+ *
+ *	@module       LastForumEntries
+ *	@version      0.4.0
+ *	@authors      Herr Rilke, Dietrich Roland Pehlke (last)
+ *	@license      GNU General Public License
+ *	@platform     2.8.x
+ *	@requirements PHP 5.4.x and higher
+ *
+ */
 
 /**
  *	function LastForumEntries()
@@ -36,6 +25,7 @@
 
 if (!function_exists('LastForumEntries')) {
 
+	
 	function LastForumEntries(
 		$max_items = 5,
 		$max_chars=50,
@@ -51,6 +41,15 @@ if (!function_exists('LastForumEntries')) {
 		require_once WB_PATH . '/modules/forum/functions.php';
 		//	require_once WB_PATH . '/modules/forum/config.php';
 
+
+		require_once (dirname(dirname(__FILE__))."/forum/classes/class.subway.php");
+		$subway = new subway(); 
+		
+		$subway->template_path = dirname(__FILE__)."/templates/";
+		if( true === $subway->twig_loaded ) {
+			$subway->loader->prependPath(  $subway->template_path );
+		}
+
 		$out = "";
 		
 		$sql = 'SELECT f.title as forum,
@@ -65,39 +64,52 @@ if (!function_exists('LastForumEntries')) {
 				ORDER BY p.dateline DESC
 				LIMIT ' . intval($max_items);
 
-		$query = $database->query($sql);
+		$all_hits = array();
+		$query = $subway->db->get_all(
+			$sql,
+			$all_hits
+		);
 		
-		if($database->is_error()) {
-			echo $database->get_error();
+		if($subway->db->is_error()) {
+			echo $subway->db->get_error();
 			return 0;
 		}
 
-		if($query->numRows() > 0)
+		// echo $subway->display( $all_hits );
+		// return 0;
+		
+		
+		if( count($all_hits) > 0 )
 		{
 			$out .= '<div id="mod_last_forum_entries">' . $heading;
 
-			while($f = $query->fetchRow())
+			foreach( $all_hits as &$f )
 			{
-				$out .= '<div class="mod_last_forum_hits_f">';
-				$out .= '<a href="'.
-					   WB_URL.'/modules/forum/thread_view.php?goto=' .
-					   $f['postid'].'"  class="mod_last_forum_entries_hits_link_f">';
-				$out .= '<span class="mod_last_forum_entries_hits_forum_f">'. $f['forum'] . '</span>';
-				$out .= '<span class="mod_last_forum_entires_hits_devider_f">' . $owd_devider .'</span>';
-				$out .= '<span class="mod_last_forum_entries_hits_title_f">'. $f['title'] . '</span>';
-				$out .= '</a>';
-				$out .= '</div>';
-				$out .= '<p class="mod_last_forum_entries_hits_text_f">'.  owd_mksubstr ( strip_bbcode($f['text']), $max_chars) . '</p>';
-
+			
+				ob_start();
+					owd_mksubstr ( strip_bbcode($f['text']), $max_chars);
+					$owd_mksubstr = ob_get_clean();
+				
+				$values = array(
+					'WB_URL' => WB_URL,
+					'f_postid'	=> $f['postid'],
+					'f_forum'	=> $f['forum'],
+					'f_date'	=> $f['datum'],
+					'owd_devider'	=> $owd_devider,
+					'f_title'	=> $f['title'],
+					'owd_mksubstr' => $owd_mksubstr
+				);
+				
+				$out .= $subway->render(
+					'frontend_view.lte',
+					$values
+				);
 			}
 			$out .= '</div>';
 		}
 
-
 		echo $out;
-
 	}
-
 }
 
 ?>
