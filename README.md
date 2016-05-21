@@ -43,8 +43,8 @@ echo $oForum->toHTML();
 ````
 
 ##### call expert
-If you want to use your own template path and/or own template-file
-e.g. inside your frontend-template direct, you'll have to set the values
+If you want to use your own template path and/or own template-file  
+e.g. inside your frontend-template direct, you'll have to set the values  
 direct via the instance e.g.
 
 ````code
