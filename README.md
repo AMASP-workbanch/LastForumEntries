@@ -42,7 +42,7 @@ $oForum->heading = "<h4>Die aktuellsten Beiträge</h4>";
 echo $oForum->toHTML();
 ````
 
-##### call expert
+##### call for own templates
 If you want to use your own template path and/or own template-file  
 e.g. inside your frontend-template direct, you'll have to set the values  
 direct via the instance e.g.
