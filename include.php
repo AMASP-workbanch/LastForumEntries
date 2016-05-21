@@ -25,12 +25,11 @@
 
 if (!function_exists('LastForumEntries')) {
 
-	
 	function LastForumEntries(
 		$max_items = 5,
-		$max_chars=50,
-		$owd_devider=' &raquo; ',
-		$heading='<h3>Letzte ForenBeitr&auml;ge</h3>'
+		$max_chars = 50,
+		$owd_devider = ' &raquo; ',
+		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>'
 	)
 	{
 		global $database;
@@ -41,15 +40,21 @@ if (!function_exists('LastForumEntries')) {
 		require_once WB_PATH . '/modules/forum/functions.php';
 		//	require_once WB_PATH . '/modules/forum/config.php';
 
-
 		require_once (dirname(dirname(__FILE__))."/forum/classes/class.subway.php");
 		$subway = new subway(); 
-		
-		$subway->template_path = dirname(__FILE__)."/templates/";
-		if( true === $subway->twig_loaded ) {
-			$subway->loader->prependPath(  $subway->template_path );
-		}
 
+		$temp_path = $subway->CMS_PATH."/templates/";
+		$temp_path .= ( $wb->page['template'] == "" ? DEFAULT_TEMPLATE : $wb->page['template']);
+		$temp_path .= "/frontend/LastForumEntries/";
+		
+		$template_path = (file_exists($temp_path."frontend_view.lte"))
+			? $temp_path
+			: dirname(__FILE__)."/templates/"
+			;
+		
+		$subway->template_path = $template_path;
+		if( true === $subway->twig_loaded ) $subway->loader->prependPath(  $subway->template_path );
+		
 		$out = "";
 		
 		$sql = 'SELECT f.title as forum,
@@ -75,10 +80,9 @@ if (!function_exists('LastForumEntries')) {
 			return 0;
 		}
 
-		// echo $subway->display( $all_hits );
+		// echo $subway->display( $temp_path );
 		// return 0;
-		
-		
+
 		if( count($all_hits) > 0 )
 		{
 			$out .= '<div id="mod_last_forum_entries">' . $heading;
@@ -91,12 +95,12 @@ if (!function_exists('LastForumEntries')) {
 					$owd_mksubstr = ob_get_clean();
 				
 				$values = array(
-					'WB_URL' => WB_URL,
-					'f_postid'	=> $f['postid'],
-					'f_forum'	=> $f['forum'],
-					'f_date'	=> $f['datum'],
+					'CMS_URL' => $subway->CMS_URL,
+					'forum_postid'	=> $f['postid'],
+					'forum_forum'	=> $f['forum'],
+					'forum_title'	=> $f['title'],
+					'forum_date'	=> $f['datum'],
 					'owd_devider'	=> $owd_devider,
-					'f_title'	=> $f['title'],
 					'owd_mksubstr' => $owd_mksubstr
 				);
 				
