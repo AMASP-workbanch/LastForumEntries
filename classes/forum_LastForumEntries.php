@@ -11,9 +11,16 @@
  *
  */
 
-class c_LastForumEntries
+class forum_LastForumEntries
 {
-	protected	$version	= "0.4.0";
+	/**
+	 *	Private version of this class
+	 */
+	protected	$version	= "0.1.3";
+	
+	/**
+	 *	Private guid of this class
+	 */	
 	protected	$guid		= "064F1FD5-2206-44C9-BF34-E5C9EDB64106";
 	
 	public $max_items = 5;
@@ -25,7 +32,16 @@ class c_LastForumEntries
 	public $template_path = "";
 	public $template_file = "frontend_view.lte";
 	
+	public $subway = NULL;
+	
+	/**
+	 *	Constructor of this class
+	 *
+	 *	@param	array	Optional assoc. array within the settings.
+	 */
 	public function __construct( $options=array() ) {
+		
+		global $wb;
 		
 		if(isset($options['max_items'])) $this->max_items = $options['max_items'];
 		if(isset($options['max_chars'])) $this->max_chars = $options['max_chars'];
@@ -33,32 +49,38 @@ class c_LastForumEntries
 		if(isset($options['heading'])) $this->heading = $options['heading'];
 		if(isset($options['time_format'])) $this->time_format = $options['time_format'];
 		if(isset($options['only_this_section'])) $this->only_this_section = $options['only_this_section'];
-	}
-	
-	public function toHTML() {
 		
-		global $wb;
-
-		//	require_once WB_PATH . '/modules/forum/config.php';
-
+		if(isset($options['template_path'])) $this->template_path = $options['template_path'];
+		if(isset($options['template_file'])) $this->template_file = $options['template_file'];
+		
 		require_once (dirname(dirname(dirname(__FILE__)))."/forum/classes/class.subway.php");
-		$subway = new subway(); 
+		$this->subway = new subway(); 
 
-		require_once $subway->CMS_PATH . '/modules/forum/functions.php';
-
-		$temp_path = $subway->CMS_PATH."/templates/";
+		$temp_path = $this->subway->CMS_PATH."/templates/";
 		$temp_path .= ( $wb->page['template'] == "" ? DEFAULT_TEMPLATE : $wb->page['template']);
 		$temp_path .= "/frontend/LastForumEntries/";
 		
-		$template_path = (file_exists($temp_path."frontend_view.lte"))
+		if( $this->template_path != "" ) $temp_path = $this->template_path;
+		
+		$template_path = (file_exists($temp_path.$this->template_file))
 			? $temp_path
 			: dirname(dirname(__FILE__))."/templates/"
 			;
 		
-		if( $this->template_path != "" ) $template_path = $this->template_path;
-		
-		$subway->template_path = $template_path;
-		if( true === $subway->twig_loaded ) $subway->loader->prependPath(  $subway->template_path );
+		$this->subway->template_path = $template_path;
+		if( true === $this->subway->twig_loaded ) $this->subway->loader->prependPath(  $this->subway->template_path );
+	}
+	
+	public function toHTML() {
+
+		//	require_once WB_PATH . '/modules/forum/config.php';
+
+		require_once $this->subway->CMS_PATH . '/modules/forum/functions.php';
+
+		if( $this->template_path != "" ){
+			$this->subway->template_path = $this->template_path;
+			if( true === $this->subway->twig_loaded ) $this->subway->loader->prependPath(  $this->subway->template_path );
+		}
 		
 		$out = "";
 		
@@ -77,17 +99,17 @@ class c_LastForumEntries
 				LIMIT ' . intval($this->max_items);
 
 		$all_hits = array();
-		$query = $subway->db->get_all(
+		$query = $this->subway->db->get_all(
 			$sql,
 			$all_hits
 		);
 		
-		if($subway->db->is_error()) {
-			echo $subway->db->get_error();
+		if($this->subway->db->is_error()) {
+			echo $this->subway->db->get_error();
 			return 0;
 		}
 
-		// echo $subway->display( $temp_path );
+		// echo $this->subway->display( $all_hits );
 		// return 0;
 
 		if( count($all_hits) > 0 )
@@ -96,9 +118,8 @@ class c_LastForumEntries
 
 			foreach( $all_hits as &$f )
 			{
-			
 				$values = array(
-					'CMS_URL' => $subway->CMS_URL,
+					'CMS_URL' => $this->subway->CMS_URL,
 					'forum_postid'	=> $f['postid'],
 					'forum_forum'	=> $f['forum'],
 					'forum_title'	=> $f['title'],
@@ -107,7 +128,7 @@ class c_LastForumEntries
 					'forum_teaser' => owd_mksubstr ( strip_bbcode($f['text']), $this->max_chars)
 				);
 				
-				$out .= $subway->render(
+				$out .= $this->subway->render(
 					$this->template_file, // 'frontend_view.lte',
 					$values
 				);

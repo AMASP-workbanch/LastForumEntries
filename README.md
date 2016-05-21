@@ -31,7 +31,7 @@ LastForumEntries( 5, 50, ' &raquo; ', '<h3>Letzte ForenBeitr&auml;ge</h3>', "d.m
 ##### 2.2 call OOP-like
 ````code
 // get instance
-$oForum = new c_LastForumEntries();
+$oForum = new forum_LastForumEntries();
 
 //	overwrite/set some values direct
 $oForum->time_format = "Y-m-d";
@@ -48,8 +48,8 @@ e.g. inside your frontend-template direct, you'll have to set the values
 direct via the instance e.g.
 
 ````code
-if (class_exists("c_LastForumEntries")) {
-	$oForum = new c_LastForumEntries();
+if (class_exists("forum_LastForumEntries")) {
+	$oForum = new forum_LastForumEntries();
 
 	// set the own template path
 	$oForum->template_path = __DIR__."/";
@@ -61,6 +61,23 @@ if (class_exists("c_LastForumEntries")) {
 	echo $oForum->toHTML();
 }
 ````
+#### 2.4 Droplet
+Example of a droplet
+````code
+$items = array('max_items','max_chars','owd_devider','heading', 'time_format','only_this_section','template_file');
+
+$options = array();
+foreach($items as &$i) if(isset( ${$i} )) $options[ $i ] = ${$i};
+
+$oForum = new forum_LastForumEntries( $options );
+
+return $oForum->toHTML();
+````
+Assumee you name it 'lastForumEntries' then you can 'call' it like e.g.:
+````code
+[[lastForumEntries?time_format=r]]
+````
+
 #### Brief changelog
 
 ##### 0.4.0

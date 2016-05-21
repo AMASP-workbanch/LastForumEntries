@@ -23,7 +23,7 @@
  *
  */
 
-require_once( dirname(__FILE__)."/classes/class.LastForumEntries.php" );
+require_once( dirname(__FILE__)."/classes/forum_LastForumEntries.php" );
 
 if (!function_exists('LastForumEntries')) {
 
@@ -46,7 +46,7 @@ if (!function_exists('LastForumEntries')) {
 			'only_this_section'	=> $only_this_section
 		);
 		
-		$oForum = new c_LastForumEntries( $options );
+		$oForum = new forum_LastForumEntries( $options );
 		
 		$out = $oForum->toHTML();
 		
