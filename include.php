@@ -30,7 +30,8 @@ if (!function_exists('LastForumEntries')) {
 		$max_chars = 50,
 		$owd_devider = ' &raquo; ',
 		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>',
-		$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT
+		$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT,
+		$only_this_section = 0
 	)
 	{
 		global $wb;
@@ -55,6 +56,8 @@ if (!function_exists('LastForumEntries')) {
 		
 		$out = "";
 		
+		$section_addition = ($only_this_section == 0) ? "" : " WHERE f.section_id ='".$only_this_section."' ";
+		
 		$sql = 'SELECT f.title as forum,
 				 p.postid, p.threadid, p.username,p.title,
 				 p.dateline as datum, p.text,
@@ -63,7 +66,7 @@ if (!function_exists('LastForumEntries')) {
 				FROM '.TABLE_PREFIX.'mod_forum_post p
 					JOIN  '.TABLE_PREFIX.'mod_forum_thread t USING(threadid)
 					JOIN  '.TABLE_PREFIX.'mod_forum_forum f ON (t.forumid = f.forumid)
-
+				'. $section_addition .'
 				ORDER BY p.dateline DESC
 				LIMIT ' . intval($max_items);
 
