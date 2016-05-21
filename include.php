@@ -29,13 +29,11 @@ if (!function_exists('LastForumEntries')) {
 		$max_items = 5,
 		$max_chars = 50,
 		$owd_devider = ' &raquo; ',
-		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>'
+		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>',
+		$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT
 	)
 	{
-		global $database;
 		global $wb;
-		global $section_id;
-		global $page_id;
 		
 		require_once WB_PATH . '/modules/forum/functions.php';
 		//	require_once WB_PATH . '/modules/forum/config.php';
@@ -59,7 +57,7 @@ if (!function_exists('LastForumEntries')) {
 		
 		$sql = 'SELECT f.title as forum,
 				 p.postid, p.threadid, p.username,p.title,
-				 FROM_UNIXTIME(p.dateline) as datum, p.text,
+				 p.dateline as datum, p.text,
 				 p.page_id, p.section_id
 
 				FROM '.TABLE_PREFIX.'mod_forum_post p
@@ -90,18 +88,14 @@ if (!function_exists('LastForumEntries')) {
 			foreach( $all_hits as &$f )
 			{
 			
-				ob_start();
-					owd_mksubstr ( strip_bbcode($f['text']), $max_chars);
-					$owd_mksubstr = ob_get_clean();
-				
 				$values = array(
 					'CMS_URL' => $subway->CMS_URL,
 					'forum_postid'	=> $f['postid'],
 					'forum_forum'	=> $f['forum'],
 					'forum_title'	=> $f['title'],
-					'forum_date'	=> $f['datum'],
+					'forum_date'	=> date( $time_format, $f['datum']),
 					'owd_devider'	=> $owd_devider,
-					'owd_mksubstr' => $owd_mksubstr
+					'forum_teaser' => owd_mksubstr ( strip_bbcode($f['text']), $max_chars)
 				);
 				
 				$out .= $subway->render(

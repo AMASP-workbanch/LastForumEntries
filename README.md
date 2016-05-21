@@ -19,7 +19,8 @@ LastForumEntries (
 	$max_items = 5,
 	$max_chars=50,
 	$owd_devider=\' &raquo; \',
-	$heading=\'&lt;h3&gt;Letzte ForenBeitr&auml;ge&lt;/h3&gt;\'
+	$heading=\'&lt;h3&gt;Letzte ForenBeitr&auml;ge&lt;/h3&gt;\',
+	$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT
 );			
 ````
 
@@ -28,6 +29,8 @@ LastForumEntries (
 ##### 0.4.0
 - Update header
 - Requirements to Forum 0.5.9 (need "subway"-class and "parser" for templates)
+- Add template for fronteendoutput
+- Add new param for formating date and time
 
 ##### 0.3.1
 - Bugfixes for WB 2.8.3 SP6 and WB(CE)

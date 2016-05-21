@@ -1,5 +1,6 @@
 {% autoescape false %}
 
+<div class="mod_last_forum_entires_date">{{ forum_date }}</div>
 <div class="mod_last_forum_hits_f">
 	
 	<a href="{{ CMS_URL }}/modules/forum/thread_view.php?goto={{ forum_postid }}" class="mod_last_forum_entries_hits_link_f">
@@ -7,8 +8,8 @@
 		<span class="mod_last_forum_entires_hits_devider_f">{{ owd_devider }}</span>
 		<span class="mod_last_forum_entries_hits_title_f">{{ forum_title }}</span>
 	</a>
-	<div class="mod_last_forum_entires_date">{{ forum_date }}</div>
+	
 </div>
-<p class="mod_last_forum_entries_hits_text_f">{{ owd_mksubstr }}</p>
+<p class="mod_last_forum_entries_hits_text_f">{{ forum_teaser }}</p>
 
 {% endautoescape %}
