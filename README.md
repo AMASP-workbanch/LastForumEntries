@@ -12,7 +12,7 @@ Snippet to display the last forum entries (WB-Forum - Module)
 "Herr Rilke", Dietrich Roland Pehlke (last) 
 
 
-##### call as function
+##### 2.1 call as function
 
 ````code
 LastForumEntries (
@@ -28,7 +28,7 @@ or
 LastForumEntries( 5, 50, ' &raquo; ', '<h3>Letzte ForenBeitr&auml;ge</h3>', "d.m.Y - H:m", 24 );
 ````
 
-##### call OOP-like
+##### 2.2 call OOP-like
 ````code
 // get instance
 $oForum = new c_LastForumEntries();
@@ -42,7 +42,7 @@ $oForum->heading = "<h4>Die aktuellsten Beiträge</h4>";
 echo $oForum->toHTML();
 ````
 
-##### call for own templates
+##### 2.3 call for own templates
 If you want to use your own template path and/or own template-file  
 e.g. inside your frontend-template direct, you'll have to set the values  
 direct via the instance e.g.
