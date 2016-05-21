@@ -22,6 +22,8 @@ class c_LastForumEntries
 	public $heading = '<h3>Last Postings</h3>';
 	public $time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT;
 	public $only_this_section = 0;
+	public $template_path = "";
+	public $template_file = "frontend_view.lte";
 	
 	public function __construct( $options=array() ) {
 		
@@ -52,6 +54,8 @@ class c_LastForumEntries
 			? $temp_path
 			: dirname(dirname(__FILE__))."/templates/"
 			;
+		
+		if( $this->template_path != "" ) $template_path = $this->template_path;
 		
 		$subway->template_path = $template_path;
 		if( true === $subway->twig_loaded ) $subway->loader->prependPath(  $subway->template_path );
@@ -104,7 +108,7 @@ class c_LastForumEntries
 				);
 				
 				$out .= $subway->render(
-					'frontend_view.lte',
+					$this->template_file, // 'frontend_view.lte',
 					$values
 				);
 			}

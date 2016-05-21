@@ -12,7 +12,7 @@ Snippet to display the last forum entries (WB-Forum - Module)
 "Herr Rilke", Dietrich Roland Pehlke (last) 
 
 
-##### call
+##### call as function
 
 ````code
 LastForumEntries (
@@ -27,7 +27,8 @@ or
 ````code
 LastForumEntries( 5, 50, ' &raquo; ', '<h3>Letzte ForenBeitr&auml;ge</h3>', "d.m.Y - H:m", 24 );
 ````
-or OOP-like
+
+##### call OOP-like
 ````code
 // get instance
 $oForum = new c_LastForumEntries();
@@ -41,7 +42,25 @@ $oForum->heading = "<h4>Die aktuellsten Beiträge</h4>";
 echo $oForum->toHTML();
 ````
 
+##### call expert
+If you want to use your own template path and/or own template-file
+e.g. inside your frontend-template direct, you'll have to set the values
+direct via the instance e.g.
 
+````code
+if (class_exists("c_LastForumEntries")) {
+	$oForum = new c_LastForumEntries();
+
+	// set the own template path
+	$oForum->template_path = __DIR__."/";
+						
+	// set the own template file
+	$oForum->template_file = "aldus_view.lte";
+						
+	//	output
+	echo $oForum->toHTML();
+}
+````
 #### Brief changelog
 
 ##### 0.4.0
