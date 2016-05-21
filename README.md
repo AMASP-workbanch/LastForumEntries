@@ -23,6 +23,10 @@ LastForumEntries (
 );			
 ````
 
-#### Brief changelog 
+#### Brief changelog
+
+##### 0.3.1
+- Bugfixes for WB 2.8.3 SP6 and WB(CE)
+
 ##### 0.3.0
 - First initial commit on GitHub

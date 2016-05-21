@@ -27,15 +27,16 @@
  -----------------------------------------------------------------------------------------
 */
 
-$module_directory     = 'LastForumEntries';
-$module_name          = 'LastForumEntries';
-$module_function      = 'snippet';
-$module_version       = '0.3.1';
-$module_platform      = '2.8.3';
-$module_author        = 'Herr Rilke';
-$module_license       = 'GNU General Public License';
-$module_description   = 'Snippet to display the last forum entries (WB-Forum - Module)<br/>
-				 NEEDS VERSION 0.3 OF WB-FORUM !<br/>
+$module_directory	= 'LastForumEntries';
+$module_name		= 'LastForumEntries';
+$module_function	= 'snippet';
+$module_version		= '0.3.1';
+$module_platform	= '2.8.3';
+$module_guid		= '677DACD1-B436-43B5-A7CC-1A0690E504B6';
+$module_author		= 'Herr Rilke, Dietrich Roland Pehlke (last)';
+$module_license		= 'GNU General Public License';
+$module_description	= 'Snippet to display the last forum entries (WB-Forum - Module)<br/>
+				 NEEDS VERSION 0.5 OF WB-FORUM !<br/>
 				 call:<pre>
 LastForumEntries ($max_items = 5, $max_chars=50, $owd_devider=\' &raquo; \',
 			$heading=\'&lt;h3&gt;Letzte ForenBeitr&auml;ge&lt;/h3&gt;\')<pre>';
