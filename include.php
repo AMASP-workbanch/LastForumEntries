@@ -23,29 +23,36 @@
 */
 
 /**
-* function LastForumEntries()
-* function to display last forum entries of WB-Forum 0.3 on every/any page.
-* (invoke function from template or code page)
-*
-* @param int 		how many last entries to display
-* @param int 		how many characters of the message body to display as preview
-* @param string 	divide thread name from entry title by a divider if you like
-* @param string 	heading
-*/
+ *	function LastForumEntries()
+ *	function to display last forum entries of WB-Forum 0.3 on every/any page.
+ *	(invoke function from template or code page)
+ *
+ *	@param int 		how many last entries to display
+ *	@param int 		how many characters of the message body to display as preview
+ *	@param string 	divide thread name from entry title by a divider if you like
+ *	@param string 	heading
+ *
+ */
 
 if (!function_exists('LastForumEntries')) {
 
-	function LastForumEntries($max_items = 5, $max_chars=50, $owd_devider=' &raquo; ',
-												$heading='<h3>Letzte ForenBeitr&auml;ge</h3>')
+	function LastForumEntries(
+		$max_items = 5,
+		$max_chars=50,
+		$owd_devider=' &raquo; ',
+		$heading='<h3>Letzte ForenBeitr&auml;ge</h3>'
+	)
 	{
-		// register outside objects
 		global $database;
 		global $wb;
-
+		global $section_id;
+		global $page_id;
+		
 		require_once WB_PATH . '/modules/forum/functions.php';
-		require_once WB_PATH . '/modules/forum/config.php';
+		//	require_once WB_PATH . '/modules/forum/config.php';
 
-
+		$out = "";
+		
 		$sql = 'SELECT f.title as forum,
 				 p.postid, p.threadid, p.username,p.title,
 				 FROM_UNIXTIME(p.dateline) as datum, p.text,
@@ -59,7 +66,11 @@ if (!function_exists('LastForumEntries')) {
 				LIMIT ' . intval($max_items);
 
 		$query = $database->query($sql);
-
+		
+		if($database->is_error()) {
+			echo $database->get_error();
+			return 0;
+		}
 
 		if($query->numRows() > 0)
 		{
@@ -85,13 +96,8 @@ if (!function_exists('LastForumEntries')) {
 
 		echo $out;
 
+	}
 
-
-
-
-
-	}// function
-
-}// if !function_exists
+}
 
 ?>

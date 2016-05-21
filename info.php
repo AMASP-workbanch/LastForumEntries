@@ -30,7 +30,7 @@
 $module_directory     = 'LastForumEntries';
 $module_name          = 'LastForumEntries';
 $module_function      = 'snippet';
-$module_version       = '0.30';
+$module_version       = '0.3.1';
 $module_platform      = '2.8.3';
 $module_author        = 'Herr Rilke';
 $module_license       = 'GNU General Public License';
