@@ -31,8 +31,8 @@ $module_directory     = 'LastForumEntries';
 $module_name          = 'LastForumEntries';
 $module_function      = 'snippet';
 $module_version       = '0.30';
-$module_platform      = '2.8';
-$module_author        = 'herr rilke';
+$module_platform      = '2.8.3';
+$module_author        = 'Herr Rilke';
 $module_license       = 'GNU General Public License';
 $module_description   = 'Snippet to display the last forum entries (WB-Forum - Module)<br/>
 				 NEEDS VERSION 0.3 OF WB-FORUM !<br/>

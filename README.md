@@ -2,17 +2,17 @@
 ## LastForumEntries
 Snippet to display the last forum entries (WB-Forum - Module)
 
-#### Requirements
+##### Requirements
 - WB 2.8.3 (sp6 recomented)
 - WB(CE) 1.1.6
 - PHP >= 5.4
 - Modul: Forum 0.5.9
 
-#### Authors
+##### Authors
 "Herr Rilke", Dietrich Roland Pehlke (last) 
 
 
-#### call
+##### call
 
 ````code
 LastForumEntries (
