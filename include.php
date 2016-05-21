@@ -23,6 +23,8 @@
  *
  */
 
+require_once( dirname(__FILE__)."/classes/class.LastForumEntries.php" );
+
 if (!function_exists('LastForumEntries')) {
 
 	function LastForumEntries(
@@ -31,86 +33,30 @@ if (!function_exists('LastForumEntries')) {
 		$owd_devider = ' &raquo; ',
 		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>',
 		$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT,
-		$only_this_section = 0
+		$only_this_section = 0,
+		$return_content = false 
 	)
 	{
-		global $wb;
-		
-		require_once WB_PATH . '/modules/forum/functions.php';
-		//	require_once WB_PATH . '/modules/forum/config.php';
-
-		require_once (dirname(dirname(__FILE__))."/forum/classes/class.subway.php");
-		$subway = new subway(); 
-
-		$temp_path = $subway->CMS_PATH."/templates/";
-		$temp_path .= ( $wb->page['template'] == "" ? DEFAULT_TEMPLATE : $wb->page['template']);
-		$temp_path .= "/frontend/LastForumEntries/";
-		
-		$template_path = (file_exists($temp_path."frontend_view.lte"))
-			? $temp_path
-			: dirname(__FILE__)."/templates/"
-			;
-		
-		$subway->template_path = $template_path;
-		if( true === $subway->twig_loaded ) $subway->loader->prependPath(  $subway->template_path );
-		
-		$out = "";
-		
-		$section_addition = ($only_this_section == 0) ? "" : " WHERE f.section_id ='".$only_this_section."' ";
-		
-		$sql = 'SELECT f.title as forum,
-				 p.postid, p.threadid, p.username,p.title,
-				 p.dateline as datum, p.text,
-				 p.page_id, p.section_id
-
-				FROM '.TABLE_PREFIX.'mod_forum_post p
-					JOIN  '.TABLE_PREFIX.'mod_forum_thread t USING(threadid)
-					JOIN  '.TABLE_PREFIX.'mod_forum_forum f ON (t.forumid = f.forumid)
-				'. $section_addition .'
-				ORDER BY p.dateline DESC
-				LIMIT ' . intval($max_items);
-
-		$all_hits = array();
-		$query = $subway->db->get_all(
-			$sql,
-			$all_hits
+		$options = array(
+			'max_items'		=> $max_items,
+			'max_chars'		=> $max_chars,
+			'owd_devider'	=> $owd_devider,
+			'heading'		=> $heading,
+			'time_format'	=> $time_format,
+			'only_this_section'	=> $only_this_section
 		);
 		
-		if($subway->db->is_error()) {
-			echo $subway->db->get_error();
-			return 0;
+		$oForum = new c_LastForumEntries( $options );
+		
+		$out = $oForum->toHTML();
+		
+		if( false === $return_content ) {
+			echo $out;
+		} else {
+			return $out;
 		}
-
-		// echo $subway->display( $temp_path );
-		// return 0;
-
-		if( count($all_hits) > 0 )
-		{
-			$out .= '<div id="mod_last_forum_entries">' . $heading;
-
-			foreach( $all_hits as &$f )
-			{
-			
-				$values = array(
-					'CMS_URL' => $subway->CMS_URL,
-					'forum_postid'	=> $f['postid'],
-					'forum_forum'	=> $f['forum'],
-					'forum_title'	=> $f['title'],
-					'forum_date'	=> date( $time_format, $f['datum']),
-					'owd_devider'	=> $owd_devider,
-					'forum_teaser' => owd_mksubstr ( strip_bbcode($f['text']), $max_chars)
-				);
-				
-				$out .= $subway->render(
-					'frontend_view.lte',
-					$values
-				);
-			}
-			$out .= '</div>';
-		}
-
-		echo $out;
 	}
 }
+
 
 ?>

@@ -23,6 +23,24 @@ LastForumEntries (
 	$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT
 );			
 ````
+or
+````code
+LastForumEntries( 5, 50, ' &raquo; ', '<h3>Letzte ForenBeitr&auml;ge</h3>', "d.m.Y - H:m", 24 );
+````
+or OOP-like
+````code
+// get instance
+$oForum = new c_LastForumEntries();
+
+//	overwrite/set some values direct
+$oForum->time_format = "Y-m-d";
+$oForum->only_this_section = 24;
+$oForum->heading = "<h4>Die aktuellsten Beiträge</h4>";
+
+//	get the entries
+echo $oForum->toHTML();
+````
+
 
 #### Brief changelog
 
