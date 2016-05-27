@@ -99,7 +99,7 @@ class forum_LastForumEntries
 				LIMIT ' . intval($this->max_items);
 
 		$all_hits = array();
-		$query = $this->subway->db->get_all(
+		$query = $this->subway->get_all(
 			$sql,
 			$all_hits
 		);
