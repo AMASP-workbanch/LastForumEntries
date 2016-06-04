@@ -79,9 +79,9 @@ Assumee you name it 'lastForumEntries' then you can 'call' it like e.g.:
 ````
 #### 2.4.1 Timeformats
 As for the timeformats, this codesnippet use the [PHP-]"date" function, so  
-please visit for details 
+please visit [PHP net :: date-manual](http://php.net/manual/en/function.date.php "date-manual") for details 
 
-http://php.net/manual/en/function.date.php
+
 
 #### Brief changelog
 
