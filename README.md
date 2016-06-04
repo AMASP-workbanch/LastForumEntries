@@ -4,7 +4,7 @@ Snippet to display the last forum entries (WB-Forum - Module)
 
 ##### Requirements
 - WB 2.8.3 (sp6 recomented)
-- WB(CE) 1.1.6
+- WBCE 1.1.6 or later
 - PHP >= 5.4
 - Modul: Forum 0.5.9
 
@@ -75,8 +75,13 @@ return $oForum->toHTML();
 ````
 Assumee you name it 'lastForumEntries' then you can 'call' it like e.g.:
 ````code
-[[lastForumEntries?time_format=r]]
+[[lastForumEntries?time_format=d.m.y]]
 ````
+#### 2.4.1 Timeformats
+As for the timeformats, this codesnippet use the [PHP-]"date" function, so  
+please visit for details 
+
+http://php.net/manual/en/function.date.php
 
 #### Brief changelog
 
