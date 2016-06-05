@@ -3,7 +3,7 @@
 /**
  *
  *	@module       LastForumEntries
- *	@version      0.4.0
+ *	@version      0.4.1
  *	@authors      Herr Rilke, Dietrich Roland Pehlke (last)
  *	@license      GNU General Public License
  *	@platform     2.8.x
@@ -32,11 +32,14 @@ if (!function_exists('LastForumEntries')) {
 		$max_chars = 50,
 		$owd_devider = ' &raquo; ',
 		$heading = '<h3>Letzte ForenBeitr&auml;ge</h3>',
-		$time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT,
+		$time_format = NULL,
 		$only_this_section = 0,
 		$return_content = false 
 	)
 	{
+	
+		if ($time_format === NULL) $time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT;
+		
 		$options = array(
 			'max_items'		=> $max_items,
 			'max_chars'		=> $max_chars,

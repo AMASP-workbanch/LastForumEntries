@@ -85,6 +85,9 @@ please visit [PHP net :: date-manual](http://php.net/manual/en/function.date.php
 
 #### Brief changelog
 
+##### 0.4.1
+- Bugfixes for the use of constants prior PHP 5.6
+
 ##### 0.4.0
 - Update header
 - Requirements to Forum 0.5.9 (need "subway"-class and "parser" for templates)

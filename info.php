@@ -3,7 +3,7 @@
 /**
  *
  *	@module       LastForumEntries
- *	@version      0.4.0
+ *	@version      0.4.1
  *	@authors      Herr Rilke, Dietrich Roland Pehlke (last)
  *	@license      GNU General Public License
  *	@platform     2.8.x
@@ -14,7 +14,7 @@
 $module_directory	= 'LastForumEntries';
 $module_name		= 'LastForumEntries';
 $module_function	= 'snippet';
-$module_version		= '0.4.0';
+$module_version		= '0.4.1';
 $module_platform	= '2.8.3';
 $module_guid		= '4F62CE3B-0AE7-402A-A73F-AC08FD99A025';
 $module_author		= 'Herr Rilke, Dietrich Roland Pehlke (last)';

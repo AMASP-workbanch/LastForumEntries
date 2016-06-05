@@ -3,7 +3,7 @@
 /**
  *
  *	@module       LastForumEntries
- *	@version      0.4.0
+ *	@version      0.4.1
  *	@authors      Herr Rilke, Dietrich Roland Pehlke (last)
  *	@license      GNU General Public License
  *	@platform     2.8.x
@@ -27,7 +27,7 @@ class forum_LastForumEntries
 	public $max_chars = 50;
 	public $owd_devider = ' &raquo; ';
 	public $heading = '<h3>Last Postings</h3>';
-	public $time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT;
+	public $time_format = "";
 	public $only_this_section = 0;
 	public $template_path = "";
 	public $template_file = "frontend_view.lte";
@@ -42,6 +42,8 @@ class forum_LastForumEntries
 	public function __construct( $options=array() ) {
 		
 		global $wb;
+		
+		$this->time_format = DEFAULT_DATE_FORMAT." - ".DEFAULT_TIME_FORMAT;
 		
 		if(isset($options['max_items'])) $this->max_items = $options['max_items'];
 		if(isset($options['max_chars'])) $this->max_chars = $options['max_chars'];
@@ -72,8 +74,6 @@ class forum_LastForumEntries
 	}
 	
 	public function toHTML() {
-
-		//	require_once WB_PATH . '/modules/forum/config.php';
 
 		require_once $this->subway->CMS_PATH . '/modules/forum/functions.php';
 
@@ -108,9 +108,6 @@ class forum_LastForumEntries
 			echo $this->subway->db->get_error();
 			return 0;
 		}
-
-		// echo $this->subway->display( $all_hits );
-		// return 0;
 
 		if( count($all_hits) > 0 )
 		{
